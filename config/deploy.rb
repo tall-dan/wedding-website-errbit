@@ -1,9 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.0"
 
-set :application, "my_app_name"
+set :application, "errbit"
 set :repo_url, 'https://github.com/tall-dan/wedding-website-errbit'
-ask :branch, :master
+ask :branch, :main
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
@@ -25,7 +25,10 @@ set :conditionally_migrate, true
 set :chruby_ruby, `cat .ruby-version`.chomp
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'public'
+append :linked_dirs, '.bundle'
+set :bundle_binstubs, -> { shared_path.join('bin') }            # default: nil
+set :bundle_env_variables, { RAILS_ENV: 'production' }
+set :bundle_jobs, 2 # default: 4, only available for Bundler >= 1.4
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
