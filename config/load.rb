@@ -7,6 +7,7 @@ require_relative '../lib/configurator'
 #
 # We use the first non-nil environment variable in the list. If the last array
 # element is a proc, it runs at the end, overriding the config value
+ENV['MONGO_URL'] = YAML.load_file('./config/secrets.yml')['production']['mongo_url']
 Errbit::Config = Configurator.run(
   host:                      ['ERRBIT_HOST'],
   protocol:                  ['ERRBIT_PROTOCOL'],
@@ -31,7 +32,7 @@ Errbit::Config = Configurator.run(
 
   # github
   github_url:                ['GITHUB_URL', lambda do |values|
-    values[:github_url].gsub(%r{/*\z}, '')
+    values[:github_url].gsub(%r{/*\z}, '') if values[:github_url]
   end],
   github_authentication:     ['GITHUB_AUTHENTICATION'],
   github_client_id:          ['GITHUB_CLIENT_ID'],
@@ -59,9 +60,7 @@ Errbit::Config = Configurator.run(
   smtp_authentication:       ['SMTP_AUTHENTICATION'],
   smtp_enable_starttls_auto: ['SMTP_ENABLE_STARTTLS_AUTO'],
   smtp_openssl_verify_mode:  ['SMTP_OPENSSL_VERIFY_MODE'],
-  smtp_user_name:            %w(SMTP_USERNAME SENDGRID_USERNAME),
-  smtp_password:             %w(SMTP_PASSWORD SENDGRID_PASSWORD),
-  smtp_domain:               ['SMTP_DOMAIN', 'SENDGRID_DOMAIN', lambda do |values|
+  smtp_user_name:            %w(SMTP_USERNAME SENDGRID_USERNAME), smtp_password:             %w(SMTP_PASSWORD SENDGRID_PASSWORD), smtp_domain:               ['SMTP_DOMAIN', 'SENDGRID_DOMAIN', lambda do |values|
     values[:smtp_domain] ||
     (values[:email_from] && values[:email_from].split('@').last) || nil
   end],

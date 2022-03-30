@@ -90,11 +90,15 @@ group :heroku, :production do
   gem 'rails_12factor', require: ENV.key?("HEROKU")
 end
 
-group :no_docker, :test, :development do
-  gem 'mini_racer', '~> 0.3.1', platform: :ruby # C Ruby (MRI) or Rubinius, but NOT Windows
+group :production do
+  gem 'capistrano', require: false
+  gem 'capistrano-chruby', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-secrets-yml', '~> 1.1.0', require: false
+  gem 'eye', '~> 0.10.0', require: false
+  gem 'unicorn-rails'
 end
 
-gem 'puma', '~> 4.3.8'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'

@@ -13,7 +13,9 @@ else
   Rails.logger = ActiveSupport::Logger.new Errbit::Config.log_location
 end
 
-Rails.logger.level = Errbit::Config.log_level.to_sym
+if Errbit::Config.log_level
+  Rails.logger.level = Errbit::Config.log_level.to_sym
+end
 
 # Initialize the Rails application.
 Rails.application.initialize!
