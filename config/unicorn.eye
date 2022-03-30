@@ -15,7 +15,7 @@ Eye.application(app_name) do
 
   process('errbit') do
     pid_file File.join(rails_root, 'tmp', 'pids', 'unicorn.pid')
-    start_command 'bundle exec unicorn -Dc config/unicorn.rb'
+    start_command 'bundle exec unicorn -Dc config/unicorn.rb -E production'
     stdall 'log/unicorn.log'
     stop_signals [:TERM, 10.seconds]
     restart_command "kill -USR2 {{PID}}"

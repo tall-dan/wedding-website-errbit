@@ -26,6 +26,8 @@ coverage/*
 /client/node_modules
 *.csv
 
+public/assets
+
 # Secrets
 config/secrets.yml
 .distribution.aws
