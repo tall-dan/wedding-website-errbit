@@ -8,6 +8,7 @@ require_relative '../lib/configurator'
 # We use the first non-nil environment variable in the list. If the last array
 # element is a proc, it runs at the end, overriding the config value
 ENV['MONGO_URL'] = YAML.load_file('./config/secrets.yml')['production']['mongo_url']
+ENV['ERRBIT_PER_APP_EMAIL_AT_NOTICES'] = 'true'
 Errbit::Config = Configurator.run(
   host:                      ['ERRBIT_HOST'],
   protocol:                  ['ERRBIT_PROTOCOL'],

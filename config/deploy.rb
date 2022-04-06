@@ -26,8 +26,8 @@ set :chruby_ruby, `cat .ruby-version`.chomp
 
 # Default value for linked_dirs is []
 append :linked_dirs, '.bundle'
-set :bundle_binstubs, -> { shared_path.join('bin') }            # default: nil
-set :bundle_env_variables, { RAILS_ENV: 'production' }
+set :bundle_binstubs, -> { shared_path.join('bin') } # default: nil
+set :bundle_env_variables, RAILS_ENV: 'production'
 set :bundle_jobs, 2 # default: 4, only available for Bundler >= 1.4
 
 # Default value for default_env is {}
